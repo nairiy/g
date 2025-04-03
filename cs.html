@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Recettes Magiques 🍴</title>
+  <style>
+    body {
+      font-family: 'Arial', sans-serif;
+      background-color: #f0f8ff;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      text-align: center;
+    }
+
+    .container {
+      background-color: #fff;
+      padding: 30px;
+      border-radius: 15px;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+      width: 350px;
+    }
+
+    h1 {
+      color: #ff6347;
+      font-size: 2.5em;
+    }
+
+    input {
+      padding: 10px;
+      width: 80%;
+      margin-top: 10px;
+      border-radius: 10px;
+      border: 1px solid #ccc;
+      font-size: 1em;
+    }
+
+    button {
+      padding: 12px 20px;
+      margin-top: 20px;
+      background-color: #ff6347;
+      color: white;
+      border: none;
+      border-radius: 10px;
+      font-size: 1.2em;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #ff4500;
+    }
+
+    .recipes-list {
+      margin-top: 30px;
+    }
+
+    .recipe {
+      background-color: #faf0e6;
+      padding: 20px;
+      margin-bottom: 15px;
+      border-radius: 10px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .recipe h3 {
+      color: #2e8b57;
+    }
+
+    .recipe p {
+      font-size: 1em;
+      color: #555;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Recettes Magiques 🍴</h1>
+    <p>Entrez les ingrédients que vous avez chez vous :</p>
+    <input type="text" id="ingredientInput" placeholder="Ex : pomme, lait, pain">
+    <button onclick="findRecipe()">Trouver une recette !</button>
+
+    <div id="recipesList" class="recipes-list">
+      <!-- Les recettes apparaîtront ici -->
+    </div>
+  </div>
+
+  <script>
+    const recipes = [
+      { name: "Salade de fruits", ingredients: ["pomme", "banane", "orange", "raisin", "kiwi"], description: "Une salade simple avec des fruits frais." },
+      { name: "Pain grillé", ingredients: ["pain", "beurre", "confiture", "miel"], description: "Des tranches de pain grillé avec du beurre et de la confiture." },
+      { name: "Smoothie au lait", ingredients: ["lait", "banane", "miel", "framboises"], description: "Un smoothie crémeux à base de lait, banane et framboises." },
+      { name: "Pâtes à la sauce tomate", ingredients: ["pâtes", "tomates", "ail", "huile d'olive", "basilic"], description: "Des pâtes avec une sauce tomate maison, à l'ail et au basilic." },
+      { name: "Crêpes", ingredients: ["farine", "lait", "oeufs", "sucre", "beurre"], description: "Des crêpes moelleuses pour le goûter." },
+      { name: "Salade César", ingredients: ["salade", "poulet", "fromage", "croutons", "sauce césar"], description: "Une salade césar avec du poulet et des croutons." },
+      { name: "Omelette au fromage", ingredients: ["oeufs", "fromage", "sel", "poivre", "beurre"], description: "Une omelette simple et savoureuse avec du fromage fondu." },
+      { name: "Riz au lait", ingredients: ["riz", "lait", "sucre", "vanille", "cannelle"], description: "Un dessert crémeux à base de riz et lait, parfumé à la vanille." },
+      { name: "Tacos", ingredients: ["tortillas", "viande hachée", "fromage râpé", "laitue", "tomates", "salsa"], description: "Des tacos savoureux avec viande hachée, fromage et salsa." },
+      { name: "Gâteau au chocolat", ingredients: ["farine", "sucre", "cacao", "oeufs", "chocolat"], description: "Un gâteau au chocolat fondant et délicieux." },
+      { name: "Soupe de légumes", ingredients: ["carottes", "pommes de terre", "poireaux", "bouillon", "sel"], description: "Une soupe saine à base de légumes de saison." },
+      { name: "Pancakes", ingredients: ["farine", "oeufs", "lait", "sucre", "beurre"], description: "Des pancakes légers et moelleux pour le petit-déjeuner." },
+      { name: "Chili con carne", ingredients: ["viande hachée", "haricots rouges", "tomates", "ail", "épices"], description: "Un chili épicé à base de viande et haricots rouges." }
+    ];
+
+    function findRecipe() {
+      const input = document.getElementById("ingredientInput").value.toLowerCase().split(",").map(item => item.trim());
+      const matchedRecipes = recipes.filter(recipe => {
+        // Vérifier si l'un des ingrédients de la recette correspond aux ingrédients de l'utilisateur
+        return recipe.ingredients.some(ingredient => input.includes(ingredient));
+      });
+
+      displayRecipes(matchedRecipes);
+    }
+
+    function displayRecipes(matchedRecipes) {
+      const recipesList = document.getElementById("recipesList");
+      recipesList.innerHTML = '';
+
+      if (matchedRecipes.length > 0) {
+        matchedRecipes.forEach(recipe => {
+          const recipeElement = document.createElement("div");
+          recipeElement.classList.add("recipe");
+          recipeElement.innerHTML = `
+            <h3>${recipe.name}</h3>
+            <p>${recipe.description}</p>
+          `;
+          recipesList.appendChild(recipeElement);
+        });
+      } else {
+        recipesList.innerHTML = "<p style='color: #ff6347;'>Aucune recette trouvée avec ces ingrédients. Essayez encore ! 🍽️</p>";
+      }
+    }
+  </script>
+</body>
+</html>
